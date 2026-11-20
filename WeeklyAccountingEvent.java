@@ -1,4 +1,5 @@
 import java.util.function.Function;
+import java.time.LocalDate;
 
 /**
  * Author: Collin Cronin
@@ -26,11 +27,15 @@ public class WeeklyAccountingEvent {
     public String run() {
         GenerateMemberReports generateMemberReports = new GenerateMemberReports(
                 servicesRepo, memberValidation, providerDirectory, providerNameLookup);
-        // generateMemberReports.generate(memberId); // per member — wire when member list is available
+        // generate for each member
 
-        // generate provider reports
-
-        // accounts payable summary
+        GenerateProviderReports generateProviderReports = new GenerateProviderReports(this.servicesRepo);
+        // generate for each provider
+        
+        AccountsPayableSummary accountsPayableSummary = new AccountsPayableSummary(this.servicesRepo);
+        LocalDate through = LocalDate.now();
+        LocalDate from = through.minusDays(7);
+        accountsPayableSummary.printSummary(from, through);
 
         CreateETFFile createETFFile = new CreateETFFile(servicesRepo, providerNameLookup);
         createETFFile.create();
