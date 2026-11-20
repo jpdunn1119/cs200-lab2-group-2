@@ -10,7 +10,7 @@ public class OperatorValidation {
      */
     public String verifyOperator(String operatorId) {
         boolean isValid = operatorId.matches("^[0-9]{9}$");
-        if (isValid) return "Validated";
-        else return "Invalid number";
+        if (isValid) return "Validated operator";
+        else return "Invalid operator number. Must contain 9 digits.";
     }
 }

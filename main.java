@@ -26,6 +26,7 @@ public class main {
         MemberValidation membersValidator = new MemberValidation(membersRepository);
         ProviderValidation providersValidator = new ProviderValidation(providersRepository);
         ServiceCodeValidator serviceValidator = new ServiceCodeValidator(providerDirectory);
+        OperatorValidation operatorValidator = new OperatorValidation();
 
         MemberController memberController = new MemberController(membersRepository);
         ProviderController providerController = new ProviderController(providersRepository);
@@ -68,6 +69,13 @@ public class main {
                 case 1: {
                     System.out.print("Enter Operator ID: ");
                     String operatorId = input.next();
+
+
+                    String operatorValidationResult = operatorValidator.verifyOperator(operatorId);
+                    System.out.println(operatorValidationResult);
+                    if (!operatorValidationResult.equals("Validated operator")) {
+                        break;
+                    }
 
                     int option = -1;
 
