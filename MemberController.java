@@ -52,7 +52,8 @@ public final class MemberController {
 
     //checks if member info is correct
     public boolean validateMemberData(Member data) {
-        return RecordValidation.validMember(data);
+        MemberValidator memberValidator = new MemberValidator(this.repository);
+        return "Valid Member".equals(memberValidator.validateMember(data.getId()));
     }
 
 
@@ -89,7 +90,7 @@ public final class MemberController {
                         || (id != null
                             && !id.isEmpty()
                             && !id.equals(
-                                    data.getMemberNumber()))) {
+                                    data.getId()))) {
 
                     //reject if member info is invalid
                     rejectChange("invalid data");
@@ -98,7 +99,7 @@ public final class MemberController {
 
                 //check if member id is already used
                 if (repository.findMember(
-                        data.getMemberNumber()) != null) {
+                        data.getId()) != null) {
 
                     //can't add two members with same id
                     rejectChange("duplicate id");
@@ -115,7 +116,7 @@ public final class MemberController {
 
                 //member successfully added
                 lastMessage = "member added: "
-                        + data.getMemberNumber();
+                        + data.getId();
 
                 return true;
 
@@ -133,8 +134,8 @@ public final class MemberController {
 
                 //make sure new info is correct, member id shld stay the same
                 if (!validateMemberData(data)
-                        || !old.getMemberNumber().equals(
-                                data.getMemberNumber())) {
+                        || !old.getId().equals(
+                                data.getId())) {
 
                     rejectChange("invalid data");
                     return false;
@@ -207,7 +208,7 @@ public final class MemberController {
         //get member ID if member exists else use null
         String id = member == null
                 ? null
-                : member.getMemberNumber();
+                : member.getId();
 
         //send info to main member records method
         return maintainMemberRecords(

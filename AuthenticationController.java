@@ -58,7 +58,7 @@ public final class AuthenticationController {
     public boolean verifyManager(String managerId, String password) {
 
         //make sure manager ID has 9 digits and password was entered
-        if (!RecordValidation.isNineDigitId(managerId) || password == null) {
+        if (this.repository.findManager(managerId) == null || password == null) {
 
             //tell manager login info is wrong
             lastMessage = "invalid manager credentials";

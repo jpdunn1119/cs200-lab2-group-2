@@ -1,9 +1,7 @@
-package Source;
-
 public class ServiceCodeValidator {
-    private ProviderDirectoryStub directory;
+    private ProviderDirectory directory;
 
-    public ServiceCodeValidator(ProviderDirectoryStub directory) {
+    public ServiceCodeValidator(ProviderDirectory directory) {
         this.directory = directory;
     }
 

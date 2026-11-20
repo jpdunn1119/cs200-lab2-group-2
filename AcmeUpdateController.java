@@ -111,10 +111,12 @@ public final class AcmeUpdateController {
  
     public boolean validateAcmeUpdate(StatusUpdate update) {
 
+        MemberValidation memberValidator = new MemberValidation(this.repository);
+
         //check update exist
         return update != null
         //AND check nine dig member number
-                && RecordValidation.isNineDigitId(update.getMemberId())
+                && "Validated".equals(memberValidator.validateMember(update.getMemberId()))
 
             // AND check date was provided 
                 && update.getUpdateDate() != null

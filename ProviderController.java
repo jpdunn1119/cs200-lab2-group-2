@@ -25,7 +25,8 @@ public final class ProviderController {
     }
 
     public boolean validateProviderData(Provider data) {
-        return RecordValidation.validProvider(data);
+        ProviderValidation providerValidator = new ProviderValidation(this.repository);
+        return "Valid Provider".equals(providerValidator.verifyProvider(data.getId()));
     }
 
     public void rejectChange(String reason) {

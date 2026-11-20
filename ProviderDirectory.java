@@ -67,4 +67,8 @@ public class ProviderDirectory {
                 .thenComparing(ServiceEntry::getServiceCode));
         return sorted;
     }
+
+    public boolean serviceExists(String serviceCode) {
+        return entries.containsKey(serviceCode);
+    }
 }

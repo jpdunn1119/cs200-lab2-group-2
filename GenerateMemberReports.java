@@ -16,15 +16,17 @@ public class GenerateMemberReports {
     MemberValidation memberValidation;
     ProviderDirectory providerDirectory;
     Function<String, String> providerNameLookup;
+    MemberRepository membersRepo;
 
     public GenerateMemberReports(ServiceRecordRepository servicesRepo,
                                  MemberValidation memberValidation,
                                  ProviderDirectory providerDirectory,
-                                 Function<String, String> providerNameLookup) {
+                                 Function<String, String> providerNameLookup, MemberRepository membersRepo) {
         this.servicesRepo = servicesRepo;
         this.memberValidation = memberValidation;
         this.providerDirectory = providerDirectory;
         this.providerNameLookup = providerNameLookup;
+        this.membersRepo = membersRepo;
     }
 
     private boolean verifyMember(String memberId) {
@@ -59,7 +61,7 @@ public class GenerateMemberReports {
         StringBuilder report = new StringBuilder();
 
         report.append(fit(member.getName(), 25)).append('\n');
-        report.append(fit(member.getNumber(), 9)).append('\n');
+        report.append(fit(member.getId(), 9)).append('\n');
         report.append(fit(member.getAddress(), 25)).append('\n');
         report.append(fit(member.getCity(), 14)).append('\n');
         report.append(fit(member.getState(), 2)).append('\n');
@@ -82,7 +84,8 @@ public class GenerateMemberReports {
      */
     public String generate(String memberId) {
         // verify
-        if (!this.verifyMember(memberId)) {
+        Member member = this.membersRepo.findMember(memberId);
+        if (!this.verifyMember(memberId) || member == null) {
             return "Invalid member";
         }
 
@@ -95,9 +98,13 @@ public class GenerateMemberReports {
         // sort by ascending service date
         records.sort(Comparator.comparing(ServiceRecord::getServiceDate));
 
-        Member member = new Member("Collin", memberId, "Main St", "Tuscaloosa", "AL", "35405");
         String report = this.formatReport(member, records);
 
         return report;
+    }
+
+    public void printReport(String memberId) {
+        String report = this.generate(memberId);
+        System.out.println(report);
     }
 }
