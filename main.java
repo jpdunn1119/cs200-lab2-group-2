@@ -107,9 +107,17 @@ public class main {
                                 String memberState = input.nextLine().trim();
                                 System.out.print("Enter Member Zip: ");
                                 String memberZip = input.nextLine().trim();
-                                System.out.print("Enter Member Phone: ");
-                                Member member = new Member(memberId, memberName, memberAddress, memberCity, memberState, memberZip, "Active");
-                                memberController.maintainMember("ADD", member);
+                               Member member = new Member( memberId, memberName, memberAddress,memberCity, memberState, memberZip, Member.ACTIVE);
+
+                                if (!MemberValidation.isValidNumber(memberId)) {
+                                    System.out.println("Invalid Member ID. Must be 9 digits.");
+                                }
+                                else if (membersRepository.insertMember(member)) {
+                                    System.out.println("Member added successfully: " + memberId);
+                                } 
+                                else {
+                                    System.out.println("Member already exists or could not be added.");
+                                }
                                 break;
                             case 2: {
                                 System.out.println("Editing Member...");
@@ -155,9 +163,17 @@ public class main {
                                 String providerState = input.nextLine().trim();
                                 System.out.print("Enter Provider Zip: ");
                                 String providerZip = input.nextLine().trim();
-                                Provider provider = new Provider(providerNumber, providerName, providerNumber, providerAddress, providerCity, providerState, providerZip);
-                                providerController.maintainProvider("ADD", provider);
-                                System.out.println(providerController.getLastMessage());
+                                Provider provider = new Provider(providerNumber, providerName, providerNumber,providerAddress, providerCity, providerState, providerZip);
+    
+                                if (!ProviderValidation.isValidNumber(providerNumber)) {
+                                    System.out.println("Invalid Provider ID. Must be 9 digits.");
+                                } 
+                                else if (providersRepository.insertProvider(provider)) {
+                                    System.out.println("Provider added successfully: " + providerNumber);
+                                } 
+                                else {
+                                    System.out.println("Provider already exists or could not be added.");
+                                }
                                 break;
                             }
                             case 5: {
@@ -204,7 +220,11 @@ public class main {
                 case 2: {
                     System.out.print("Enter Provider ID: ");
                     String providerId = input.nextLine().trim();
-
+                    if (!"Validated".equals(
+                        providersValidator.verifyProvider(providerId))) {
+                    System.out.println("Invalid Provider ID. Access denied.");
+                    break;
+                    }
                     int option = -1;
 
                     while (option != 0) {
