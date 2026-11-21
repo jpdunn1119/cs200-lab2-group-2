@@ -19,7 +19,9 @@ public class main {
 
         seedMembers(membersRepository);
         seedProviders(providersRepository);
+        seedManagers(managersRepository);
 
+        AuthenticationController managerAuthentication = new AuthenticationController(managersRepository);
         ProviderDirectory providerDirectory = new ProviderDirectory();
         seedProviderDirectory(providerDirectory);
 
@@ -270,7 +272,6 @@ public class main {
                                 System.out.print("Add comments? (y/n): ");
                                 String addCommentsChoice = input.nextLine().trim();
                                 if (addCommentsChoice.equalsIgnoreCase("y")) {
-                                    input.nextLine();
                                     System.out.print("Enter comments (max 100 chars): ");
                                     String comments = input.nextLine();
                                     if (!serviceController.addServiceComments(comments)) {
@@ -316,7 +317,14 @@ public class main {
                 case 3: {
                     System.out.print("Enter Manager ID: ");
                     String managerId = input.nextLine().trim();
+                    System.out.print("Enter Manager Password: ");
+                    String managerPassword = input.nextLine().trim();
 
+                    if (!managerAuthentication.verifyManager(
+                            managerId, managerPassword)) {
+                        System.out.println(managerAuthentication.getLastMessage());
+                        break;
+                        }
                     int option = -1;
 
                     while (option != 0) {
@@ -384,6 +392,18 @@ public class main {
         input.close();
     }
 
+    private static void seedManagers(ManagerRepository repository) {
+    repository.insertManager(new Manager(
+        "333333333",
+        "Demo Manager",
+        "333333333",
+        "123 Main St",
+        "Tuscaloosa",
+        "AL",
+        "35405",
+        "demo123"
+    ));
+}
     private static void seedMembers(MemberRepository repository) {
         repository.insertMember(new Member(
                 "111111111",
@@ -399,7 +419,7 @@ public class main {
         repository.insertProvider(new Provider(
                 "222222222",
                 "Dr. John Smith",
-                "1",
+                "222222222",
                 "456 Oak Ave",
                 "Tuscaloosa",
                 "AL",
