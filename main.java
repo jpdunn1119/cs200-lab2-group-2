@@ -67,7 +67,7 @@ public class main {
                 // OPERATOR MENU
                 case 1: {
                     System.out.print("Enter Operator ID: ");
-                    String operatorId = input.next();
+                    String operatorId = input.nextLine().trim();
 
 
                     String operatorValidationResult = operatorValidator.verifyOperator(operatorId);
@@ -94,17 +94,17 @@ public class main {
                             case 1:
                                 System.out.println("Adding Member...");
                                 System.out.print("Enter Member ID: ");
-                                String memberId = input.next();
+                                String memberId = input.nextLine().trim();
                                 System.out.print("Enter Member Name: ");
-                                String memberName = input.next();
+                                String memberName = input.nextLine().trim();
                                 System.out.print("Enter Member Address: ");
-                                String memberAddress = input.next();
+                                String memberAddress = input.nextLine().trim();
                                 System.out.print("Enter Member City: ");
-                                String memberCity = input.next();
+                                String memberCity = input.nextLine().trim();
                                 System.out.print("Enter Member State: ");
-                                String memberState = input.next();
+                                String memberState = input.nextLine().trim();
                                 System.out.print("Enter Member Zip: ");
-                                String memberZip = input.next();
+                                String memberZip = input.nextLine().trim();
                                 System.out.print("Enter Member Phone: ");
                                 Member member = new Member(memberId, memberName, memberAddress, memberCity, memberState, memberZip, "Active");
                                 memberController.maintainMember("ADD", member);
@@ -112,17 +112,17 @@ public class main {
                             case 2: {
                                 System.out.println("Editing Member...");
                                 System.out.print("Enter Member ID: ");
-                                String editMemberId = input.next();
+                                String editMemberId = input.nextLine().trim();
                                 System.out.print("Enter Member Name: ");
-                                String editMemberName = input.next();
+                                String editMemberName = input.nextLine().trim();
                                 System.out.print("Enter Member Address: ");
-                                String editMemberAddress = input.next();
+                                String editMemberAddress = input.nextLine().trim();
                                 System.out.print("Enter Member City: ");
-                                String editMemberCity = input.next();
+                                String editMemberCity = input.nextLine().trim();
                                 System.out.print("Enter Member State: ");
-                                String editMemberState = input.next();
+                                String editMemberState = input.nextLine().trim();
                                 System.out.print("Enter Member Zip: ");
-                                String editMemberZip = input.next();
+                                String editMemberZip = input.nextLine().trim();
                                 Member editMember = new Member(editMemberId, editMemberName, editMemberAddress, editMemberCity, editMemberState, editMemberZip, "Active");
                                 memberController.maintainMember("UPDATE", editMember);
                                 System.out.println(memberController.getLastMessage());
@@ -131,9 +131,9 @@ public class main {
                             case 3: {
                                 System.out.println("Deleting Member...");
                                 System.out.print("Enter Member ID: ");
-                                String deleteMemberId = input.next();
+                                String deleteMemberId = input.nextLine().trim();
                                 System.out.print("Confirm deletion (y/n): ");
-                                String deleteConfirm = input.next();
+                                String deleteConfirm = input.nextLine().trim();
                                 boolean confirmed = deleteConfirm.equalsIgnoreCase("y");
                                 memberController.maintainMemberRecords("DELETE", deleteMemberId, null, confirmed);
                                 System.out.println(memberController.getLastMessage());
@@ -142,17 +142,17 @@ public class main {
                             case 4: {
                                 System.out.println("Adding Provider...");
                                 System.out.print("Enter Provider Number: ");
-                                String providerNumber = input.next();
+                                String providerNumber = input.nextLine().trim();
                                 System.out.print("Enter Provider Name: ");
-                                String providerName = input.next();
+                                String providerName = input.nextLine().trim();
                                 System.out.print("Enter Provider Address: ");
-                                String providerAddress = input.next();
+                                String providerAddress = input.nextLine().trim();
                                 System.out.print("Enter Provider City: ");
-                                String providerCity = input.next();
+                                String providerCity = input.nextLine().trim();
                                 System.out.print("Enter Provider State: ");
-                                String providerState = input.next();
+                                String providerState = input.nextLine().trim();
                                 System.out.print("Enter Provider Zip: ");
-                                String providerZip = input.next();
+                                String providerZip = input.nextLine().trim();
                                 Provider provider = new Provider(providerNumber, providerName, providerNumber, providerAddress, providerCity, providerState, providerZip);
                                 providerController.maintainProvider("ADD", provider);
                                 System.out.println(providerController.getLastMessage());
@@ -161,17 +161,17 @@ public class main {
                             case 5: {
                                 System.out.println("Editing Provider...");
                                 System.out.print("Enter Provider Number: ");
-                                String editProviderNumber = input.next();
+                                String editProviderNumber = input.nextLine().trim();
                                 System.out.print("Enter Provider Name: ");
-                                String editProviderName = input.next();
+                                String editProviderName = input.nextLine().trim();
                                 System.out.print("Enter Provider Address: ");
-                                String editProviderAddress = input.next();
+                                String editProviderAddress = input.nextLine().trim();
                                 System.out.print("Enter Provider City: ");
-                                String editProviderCity = input.next();
+                                String editProviderCity = input.nextLine().trim();
                                 System.out.print("Enter Provider State: ");
-                                String editProviderState = input.next();
+                                String editProviderState = input.nextLine().trim();
                                 System.out.print("Enter Provider Zip: ");
-                                String editProviderZip = input.next();
+                                String editProviderZip = input.nextLine().trim();
                                 Provider editProvider = new Provider(editProviderNumber, editProviderName, editProviderNumber, editProviderAddress, editProviderCity, editProviderState, editProviderZip);
                                 providerController.maintainProvider("UPDATE", editProvider);
                                 System.out.println(providerController.getLastMessage());
@@ -180,9 +180,9 @@ public class main {
                             case 6: {
                                 System.out.println("Deleting Provider...");
                                 System.out.print("Enter Provider Number: ");
-                                String deleteProviderNumber = input.next();
+                                String deleteProviderNumber = input.nextLine().trim();
                                 System.out.print("Confirm deletion (y/n): ");
-                                String deleteProviderConfirm = input.next();
+                                String deleteProviderConfirm = input.nextLine().trim();
                                 boolean providerConfirmed = deleteProviderConfirm.equalsIgnoreCase("y");
                                 providerController.maintainProviderRecords("DELETE", deleteProviderNumber, null, providerConfirmed);
                                 System.out.println(providerController.getLastMessage());
@@ -201,7 +201,7 @@ public class main {
                 // PROVIDER MENU
                 case 2: {
                     System.out.print("Enter Provider ID: ");
-                    String providerId = input.next();
+                    String providerId = input.nextLine().trim();
 
                     int option = -1;
 
@@ -219,14 +219,14 @@ public class main {
                             case 1:
                                 System.out.println("Validating Member...");
                                 System.out.print("Enter Member ID: ");
-                                String memberId = input.next();
+                                String memberId = input.nextLine().trim();
                                 System.out.println(membersValidator.validateMember(memberId));
                                 break;
 
                             case 2:
                                 System.out.println("Validating Service Code...");
                                 System.out.print("Enter Service Code: ");
-                                String serviceCode = input.next();
+                                String serviceCode = input.nextLine().trim();
 
                                 if (serviceValidator.validateServiceCode(serviceCode)) {
                                     System.out.println("Valid Service Code");
@@ -238,11 +238,11 @@ public class main {
                             case 3: {
                                 System.out.println("Recording Service...");
                                 System.out.print("Enter Member Number: ");
-                                String recordMemberId = input.next();
+                                String recordMemberId = input.nextLine().trim();
                                 System.out.print("Enter Date of Service (YYYY-MM-DD): ");
-                                String serviceDateText = input.next();
+                                String serviceDateText = input.nextLine().trim();
                                 System.out.print("Enter Service Code: ");
-                                String recordServiceCode = input.next();
+                                String recordServiceCode = input.nextLine().trim();
 
                                 LocalDate serviceDate;
                                 try {
@@ -261,14 +261,14 @@ public class main {
                                 System.out.println("Service: " + serviceController.getPendingServiceName());
                                 System.out.println("Fee: $" + serviceController.getPendingFee());
                                 System.out.print("Confirm service (y/n): ");
-                                String serviceConfirm = input.next();
+                                String serviceConfirm = input.nextLine().trim();
                                 if (!serviceController.confirmService(serviceConfirm.equalsIgnoreCase("y"))) {
                                     System.out.println(serviceController.getLastError());
                                     break;
                                 }
 
                                 System.out.print("Add comments? (y/n): ");
-                                String addCommentsChoice = input.next();
+                                String addCommentsChoice = input.nextLine().trim();
                                 if (addCommentsChoice.equalsIgnoreCase("y")) {
                                     input.nextLine();
                                     System.out.print("Enter comments (max 100 chars): ");
@@ -315,7 +315,7 @@ public class main {
                 // MANAGER MENU
                 case 3: {
                     System.out.print("Enter Manager ID: ");
-                    String managerId = input.next();
+                    String managerId = input.nextLine().trim();
 
                     int option = -1;
 
@@ -344,14 +344,14 @@ public class main {
                             case 3: {
                                 System.out.println("Generating Member Report...");
                                 System.out.print("Enter Member Number: ");
-                                String reportMemberId = input.next();
+                                String reportMemberId = input.nextLine().trim();
                                 memberReports.printReport(reportMemberId);
                                 break;
                             }
                             case 4: {
                                 System.out.println("Generating Provider Report...");
                                 System.out.print("Enter Provider Number: ");
-                                String reportProviderId = input.next();
+                                String reportProviderId = input.nextLine().trim();
                                 LocalDate providerThrough = LocalDate.now();
                                 LocalDate providerFrom = providerThrough.minusDays(7);
                                 try {
@@ -411,7 +411,7 @@ public class main {
         directory.addService(new ServiceEntry("883948", "Aerobics Exercise", new BigDecimal("30.00")));
         directory.addService(new ServiceEntry("123456", "Consultation", new BigDecimal("50.00")));
     }
-}
+
 private static int readChoice(Scanner input) {
     while (true) {
         String text = input.nextLine().trim();
@@ -419,6 +419,7 @@ private static int readChoice(Scanner input) {
             return Integer.parseInt(text);
         } catch (NumberFormatException ex) {
             System.out.print("Enter a valid menu number: ");
+            }
         }
     }
 }
