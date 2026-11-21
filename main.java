@@ -61,8 +61,7 @@ public class main {
             System.out.println("0. Exit");
             System.out.print("Enter Choice: ");
 
-            choice = input.nextInt();
-
+            choice = readChoice(input);
             switch (choice) {
 
                 // OPERATOR MENU
@@ -90,8 +89,7 @@ public class main {
                         System.out.println("0. Back");
                         System.out.print("Enter Choice: ");
 
-                        option = input.nextInt();
-
+                        option = readChoice(input);
                         switch (option) {
                             case 1:
                                 System.out.println("Adding Member...");
@@ -216,8 +214,7 @@ public class main {
                         System.out.println("0. Back");
                         System.out.print("Enter Choice: ");
 
-                        option = input.nextInt();
-
+                        option = readChoice(input);
                         switch (option) {
                             case 1:
                                 System.out.println("Validating Member...");
@@ -331,8 +328,7 @@ public class main {
                         System.out.println("0. Back");
                         System.out.print("Enter Choice: ");
 
-                        option = input.nextInt();
-
+                        option = readChoice(input);
                         switch (option) {
                             case 1:
                                 System.out.println("Running Weekly Accounting...");
@@ -414,5 +410,15 @@ public class main {
         directory.addService(new ServiceEntry("598470", "Dietitian", new BigDecimal("75.00")));
         directory.addService(new ServiceEntry("883948", "Aerobics Exercise", new BigDecimal("30.00")));
         directory.addService(new ServiceEntry("123456", "Consultation", new BigDecimal("50.00")));
+    }
+}
+private static int readChoice(Scanner input) {
+    while (true) {
+        String text = input.nextLine().trim();
+        try {
+            return Integer.parseInt(text);
+        } catch (NumberFormatException ex) {
+            System.out.print("Enter a valid menu number: ");
+        }
     }
 }
