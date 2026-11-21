@@ -133,9 +133,19 @@ public class main {
                                 String editMemberState = input.nextLine().trim();
                                 System.out.print("Enter Member Zip: ");
                                 String editMemberZip = input.nextLine().trim();
-                                Member editMember = new Member(editMemberId, editMemberName, editMemberAddress, editMemberCity, editMemberState, editMemberZip, "Active");
-                                memberController.maintainMember("UPDATE", editMember);
-                                System.out.println(memberController.getLastMessage());
+                                Member oldMember = membersRepository.findMember(editMemberId);
+
+                                if (oldMember == null) {
+                                    System.out.println("Member not found.");
+                                } else {
+                                Member editMember = new Member(editMemberId, editMemberName, editMemberAddress,editMemberCity, editMemberState, editMemberZip,oldMember.getStatus());
+
+                                if (membersRepository.updateMember(editMemberId, editMember)) {
+                                    System.out.println("Member updated successfully.");
+                                } else {
+                                    System.out.println("Unable to update member.");
+                                    }
+                                }
                                 break;
                             }
                             case 3: {
@@ -190,9 +200,14 @@ public class main {
                                 String editProviderState = input.nextLine().trim();
                                 System.out.print("Enter Provider Zip: ");
                                 String editProviderZip = input.nextLine().trim();
-                                Provider editProvider = new Provider(editProviderNumber, editProviderName, editProviderNumber, editProviderAddress, editProviderCity, editProviderState, editProviderZip);
-                                providerController.maintainProvider("UPDATE", editProvider);
-                                System.out.println(providerController.getLastMessage());
+                               Provider editProvider = new Provider(editProviderNumber, editProviderName, editProviderNumber,editProviderAddress, editProviderCity,editProviderState, editProviderZip);
+
+                               if (providersRepository.updateProvider(editProviderNumber, editProvider)) {
+                                    System.out.println("Provider updated successfully.");
+                                }
+                               else {
+                                    System.out.println("Provider not found or could not be updated.");
+                                }
                                 break;
                             }
                             case 6: {
