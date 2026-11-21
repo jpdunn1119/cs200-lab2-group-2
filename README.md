@@ -49,28 +49,54 @@ The application uses a command-line interface (CLI) that allows operators, provi
 ### Requirements
 
 - Java JDK 21 or later
-- A command-line terminal or IDE such as Visual Studio Code
+- Visual Studio Code or a terminal
+- All Java source files from the GitHub repository
 
-### Instructions
+### Instructions for Windows / VS Code
 
 1. Download or clone the GitHub repository.
-2. Open a terminal in the folder containing the Java source files.
-3. Compile the Java files:
+2. Extract the downloaded ZIP file if necessary.
+3. Open the extracted project in Visual Studio Code.
+4. Open a terminal using **Terminal > New Terminal**.
+5. Navigate to the folder containing `main.java` and the other `.java` files.
 
-```bash
-mkdir build
-javac -d build *.java
+If the downloaded ZIP contains a second project folder, enter it using:
+
+```powershell
+cd .\cs200-lab2-group-2-main
 ```
 
-4. Run the program:
+6. Create the build directory:
 
-```bash
+```powershell
+New-Item -ItemType Directory -Force build
+```
+
+7. Compile all Java source files using PowerShell:
+
+```powershell
+javac -d build (Get-ChildItem -Filter *.java | ForEach-Object { $_.FullName })
+```
+
+8. Run the ChocAn application:
+
+```powershell
 java -cp build main
 ```
 
-If a `build` directory already exists, skip the `mkdir build` command.
+### Alternative: Windows Command Prompt (CMD)
 
-### Main Menu
+If using Command Prompt instead of PowerShell, run these commands from the folder containing the Java source files:
+
+```cmd
+mkdir build
+javac -d build *.java
+java -cp build main
+```
+
+If the `build` folder already exists, skip the `mkdir build` command.
+
+### Expected Output
 
 ```text
 ===== CHOCAN SYSTEM =====
@@ -78,9 +104,51 @@ If a `build` directory already exists, skip the `mkdir build` command.
 2. Provider Login
 3. Manager Login
 0. Exit
+Enter Choice:
 ```
 
 Enter the number corresponding to the desired operation and follow the prompts.
+
+### Troubleshooting
+
+**Error: `Invalid filename: *.java`**
+
+This may occur when compiling with PowerShell. Use the PowerShell compilation command instead of `javac -d build *.java`:
+
+```powershell
+javac -d build (Get-ChildItem -Filter *.java | ForEach-Object { $_.FullName })
+```
+
+**Error: `no source files`**
+
+This means the terminal is likely not in the folder containing the Java files.
+
+To locate them, run:
+
+```powershell
+Get-ChildItem -Recurse -Filter *.java
+```
+
+Navigate into the folder containing `main.java` before compiling.
+
+**Error: `Could not find or load main class main`**
+
+Make sure compilation completed successfully before running the program.
+
+Verify that `main.class` exists in the `build` directory.
+
+The application must be launched with the lowercase class name:
+
+```powershell
+java -cp build main
+```
+
+### Additional Notes
+
+- The Java classes use the default package.
+- The entry-point class is named `main`.
+- Compiled `.class` files are stored in the `build` directory.
+- No external Java libraries or dependencies are required.
 
 ## Demonstration Accounts
 
@@ -105,19 +173,71 @@ These sample records are initialized when the application starts.
 
 ## Program Structure
 
-The project is organized into Java classes with different responsibilities:
+The project is organized into Java classes with different responsibilities.
 
-**Models:** `Member`, `Provider`, `Manager`, `ServiceRecord`, `ServiceEntry`, and `StatusUpdate`.
+### Models
 
-**Repositories:** `MemberRepository`, `ProviderRepository`, `ManagerRepository`, and `ServiceRecordRepository`.
+- `Member`
+- `Provider`
+- `Manager`
+- `ServiceRecord`
+- `ServiceEntry`
+- `StatusUpdate`
+- `UpdateSummary`
 
-**Controllers:** `MemberController`, `ProviderController`, `ServiceController`, `DirectoryController`, `AuthenticationController`, and `AcmeUpdateController`.
+These classes represent the information stored and processed by the system.
 
-**Validation:** `MemberValidation`, `MemberValidator`, `ProviderValidation`, `OperatorValidation`, and `ServiceCodeValidator`.
+### Repositories
 
-**Accounting and Reporting:** `WeeklyAccountingEvent`, `GenerateMemberReports`, `GenerateProviderReports`, `AccountsPayableSummary`, and `CreateETFFile`.
+- `MemberRepository`
+- `ProviderRepository`
+- `ManagerRepository`
+- `ServiceRecordRepository`
 
-**Main Entry Point:** `main.java`.
+Repositories manage the in-memory records used throughout the application.
+
+### Controllers
+
+- `MemberController`
+- `ProviderController`
+- `ServiceController`
+- `DirectoryController`
+- `AuthenticationController`
+- `AcmeUpdateController`
+
+Controllers coordinate operations such as maintaining records, authenticating users, handling service entries, and applying membership updates.
+
+### Validation
+
+- `MemberValidation`
+- `MemberValidator`
+- `ProviderValidation`
+- `OperatorValidation`
+- `ServiceCodeValidator`
+
+These classes validate identification numbers, membership status, and service codes.
+
+### Accounting and Reporting
+
+- `WeeklyAccountingEvent`
+- `GenerateMemberReports`
+- `GenerateProviderReports`
+- `AccountsPayableSummary`
+- `CreateETFFile`
+
+These classes process service records, calculate provider payments, generate reports, and produce EFT data.
+
+### Supporting Classes
+
+- `ProviderDirectory`
+- `DirectoryFileWriter`
+- `LockoutTimer`
+
+These classes support provider directory generation and authentication lockout behavior.
+
+### Main Entry Point
+
+`main.java` contains the command-line interface and connects the application's components.
 
 The classes work together to provide a modular, object-oriented implementation of the ChocAn system.
 
@@ -138,29 +258,37 @@ Data entered during a session is not automatically preserved after the program e
 
 ## UML Class Diagram
 
-The final UML class diagram documents the implemented Java classes, including their attributes, methods, and relationships.
+The final UML class diagram is provided as `proj 4 uml.uxf`.
 
-The diagram is included separately in the project submission as an editable UMLet (`.uxf`) file.
+It documents the Java classes implemented in Project 4, including their attributes, methods, and relationships.
+
+The diagram was created using UMLet and is included in the project submission.
 
 ## Team Contributions
 
-This project was developed collaboratively by Group 2. Team members implemented separate components and integrated them through shared Java classes and repositories.
+This project was developed collaboratively by Group 2.
 
-Individual contributions and development history are documented through the team's GitHub commits.
+Team members implemented separate components and integrated them through shared Java classes and repositories.
+
+Individual contributions and development history are documented through GitHub commits and the project demonstration.
 
 ## Project Demonstration
 
-The project demonstration shows the application's primary functions, including:
+The project demonstration covers the application's primary functions, including:
 
 - Role-specific menus and authentication
 - Member and provider management
 - Member and service code validation
-- Service recording
+- Service recording and confirmation
 - Provider Directory generation
-- Manager reporting and weekly accounting
+- Manager reporting
+- Weekly accounting and EFT file generation
+- Class interactions and team contributions
 
-## Notes
+## Project Notes
 
 - The system is a command-line application; no graphical user interface is required.
 - The implementation uses Java classes, objects, controllers, repositories, and validation methods.
+- The system supports basic error handling and user input validation.
+- Membership information and service records are stored in memory during execution.
 - The project was developed for the CS 200 Software Engineering course at the University of Alabama.
